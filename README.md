@@ -5,8 +5,8 @@ odd, but fully understandable and necessary.
 
 ## Define Namespaces
 <pre>
-      <code>
-            namespace("ui.controls.Box");
-            ui.controls.Box = function(){}
-      </code>
+	<code>
+		namespace("ui.controls.Box");
+		ui.controls.Box = function(){}
+	</code>
 </pre>
