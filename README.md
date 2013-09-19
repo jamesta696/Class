@@ -105,7 +105,7 @@ and Ruby's simpler module mixins. We'll look at both here.
 <pre>
   <code>
   	namespace("ui.controls.Box", {
-  	    '@traits'  : [Logger],
+  	    '@traits' : [Logger],
   	    
     	  initialize : function(){
     	      alert("I am a box")
