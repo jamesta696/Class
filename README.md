@@ -97,8 +97,13 @@ and Ruby's simpler module mixins. We'll look at both here.
   	        console.warn(str)
   	    }
   	}
-  	
-  	**Apply the module as a mixin**
+  </code>
+</pre>
+
+
+**Apply the module as a mixin**
+<pre>
+  <code>
   	namespace("ui.controls.Box", {
   	    '@traits'  : [Logger],
   	    
@@ -108,3 +113,5 @@ and Ruby's simpler module mixins. We'll look at both here.
   	})
   </code>
 </pre>
+
+  	
