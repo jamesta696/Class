@@ -75,7 +75,7 @@ odd, but fully understandable and necessary.
 </pre>
 
 
-# Modules & Traits
+# Code Sharing > Modules Mixins
 In object-oriented programming, to reuse code (a module or api) across multiple classes
 when inheritance does not make sense is to use either:
    - delegation (every language)
@@ -114,4 +114,44 @@ and Ruby's simpler module mixins. We'll look at both here.
   </code>
 </pre>
 
+
+# Code Sharing > Traits
+Traits are similar to module mixins, but does not actually mix itself into the prototype chain of
+the class. Instead, a trait is self-contained function with seperate scope, runs isolated and able to decorate
+the host class with new behavior and properties. A mixin otherwise mixes itself and all it's state into
+the prototype of the class. Both ways have pros and cons.
+
+**Define a function as a trait**
+<pre>
+  <code>
+  	var Logger = function(hostClass){
+  	        this.host = hostClass;
+  	        this.host.logapi = this;
+  	    };
+  	    
+  	    Logger.prototype = {
+      	    log : function(str){
+      	        console.log(this.host.namespace + " logged -> " + str);
+      	    }
+  	    }
+  </code>
+</pre>
+
+
+**Apply the trait**
+<pre>
+  <code>
+  	namespace("ui.controls.Box", {
+  	    '@traits' : [Logger],
+  	    
+    	  initialize : function(){
+    	      console.log(this.logapi) //reference to Logger instance
+    	  },
+    	  
+    	  log : function(str){
+    	      this.logapi.log(str)
+    	  }
+  	})
+  </code>
+</pre>
   	
