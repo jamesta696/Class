@@ -11,3 +11,14 @@ odd, but fully understandable and necessary.
   </code>
 </pre>
 
+
+**Define a Class**
+<pre>
+  <code>
+  	namespace("ui.controls.Box", {
+  	  initialize : function(){
+  	    alert("I am a box")
+  	  }
+  	})
+  </code>
+</pre>
