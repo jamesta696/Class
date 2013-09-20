@@ -138,7 +138,7 @@ the prototype of the class. Both ways have pros and cons.
 </pre>
 
 
-**Apply the trait**
+**Apply the function as a trait**
 <pre>
   <code>
   	namespace("ui.controls.Box", {
