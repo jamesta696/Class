@@ -18,6 +18,9 @@ and inheritance in Javascript using a terse and supple syntax.
   	    //class body here
   	})
   </code>
+  
+  *USAGE:*
+  var box = new ui.controls.Box;
 </pre>
 
 
