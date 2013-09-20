@@ -19,7 +19,7 @@ and inheritance in Javascript using a terse and supple syntax.
   	})
   </code>
   
-  *USAGE:*
+  ==USAGE==
   var box = new ui.controls.Box;
 </pre>
 
