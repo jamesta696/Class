@@ -153,4 +153,45 @@ the prototype of the class. Both ways have pros and cons.
   	})
   </code>
 </pre>
-  	
+
+
+# Code Sharing > Multiple Traits
+Your class might make use of a single trait or multiple traits, -- works like multiple inheritance 
+which could lead to ambigous method calls, but increases the leverage to share code across classes:
+
+**Define multiple kinds of traits (as functions or modules)**
+<pre>
+  <code>
+    var Draggable = {
+        initialize : function(){},
+        setDraggable : function(){...}
+    };
+    
+    var Resizable = {...}
+    
+  	var Logger = function(hostClass){
+  	        this.host = hostClass;
+  	        this.host.logapi = this;
+  	    };
+  	    
+  	    Logger.prototype = {
+      	    log : function(str){
+      	        console.log(this.host.namespace + " logged -> " + str);
+      	    }
+  	    }
+  </code>
+</pre>
+
+
+**Implement multiple traits**
+<pre>
+  <code>
+  	namespace("ui.controls.Box", {
+  	    '@traits' : [Logger, Draggable, Resizable],
+  	    
+    	  initialize : function(){
+    	      console.log("I can now log, drag and resize myself :");
+    	  }
+  	})
+  </code>
+</pre>
