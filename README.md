@@ -33,6 +33,25 @@ and inheritance in Javascript using a terse and supple syntax.
     	  }
   	})
   </code>
+  
+  ==USAGE==
+  var box = new ui.controls.Box; //invokes the constructor automatically
+</pre>
+
+
+**Define a Class constructor with arguments**
+<pre>
+  <code>
+  	namespace("ui.controls.Box", {
+    	  initialize : function(width, heigt){
+    	      this.width  = width;
+    	      this.height = height;
+    	  }
+  	})
+  </code>
+  
+  ==USAGE==
+  var box = new ui.controls.Box(300, 200);
 </pre>
 
 
