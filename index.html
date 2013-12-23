@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Class by Nashorn</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Class</h1>
+        <h2>Lite-weight and optimized class definition made simple in Javascript. Supports namespacing, classes, inheritance and module mixins in just 5kb</h2>
+        <a href="https://github.com/Nashorn/Class" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a name="javascript-classes" class="anchor" href="#javascript-classes"><span class="octicon octicon-link"></span></a>Javascript Classes</h1>
+
+<p>Class.js is lite-weight and optimized library used for defining namespaces, classes 
+and inheritance in Javascript using a terse and supple syntax.</p>
+
+<p><strong>Define a Namespace</strong></p>
+
+<pre>
+  <code>
+    namespace("ui.controls.Box");
+    ui.controls.Box = function(){}
+  </code>
+</pre>
+
+<p><strong>Define an empty Class in a Namespace</strong></p>
+
+<pre>
+  <code>
+    namespace("ui.controls.Box", {
+        //class body here
+    })
+  </code>
+  
+  ==USAGE==
+  var box = new ui.controls.Box;
+</pre>
+
+<p><strong>Define a Class constructor</strong></p>
+
+<pre>
+  <code>
+    namespace("ui.controls.Box", {
+          initialize : function(){
+              alert("I am a box")
+          }
+    })
+  </code>
+  
+  ==USAGE==
+  var box = new ui.controls.Box; //invokes the constructor automatically
+</pre>
+
+<p><strong>Define a Class constructor with arguments</strong></p>
+
+<pre>
+  <code>
+    namespace("ui.controls.Box", {
+          initialize : function(width, heigt){
+              this.width  = width;
+              this.height = height;
+          }
+    })
+  </code>
+  
+  ==USAGE==
+  var box = new ui.controls.Box(300, 200);
+</pre>
+
+<p><strong>Define other instance methods</strong></p>
+
+<pre>
+  <code>
+    namespace("ui.controls.Box", {
+          initialize : function(){
+              alert("I am a box")
+          },
+          
+          isBox : function(){
+              return this instanceof ui.controls.Box
+          }
+    })
+  </code>
+</pre>
+
+<p><strong>Define inheritance</strong></p>
+
+<pre>
+  <code>
+    namespace("ui.controls.Panel", {
+        '@inherits': ui.controls.Box
+    })
+  </code>
+</pre>
+
+<p><strong>Call baseclass methods</strong></p>
+
+<pre>
+  <code>
+    namespace("ui.controls.Panel", {
+        '@inherits': ui.controls.Box,
+        
+        isBox : function(){
+            this.parent();
+            alert("delegating to isBox() on baseclass Box");
+        }
+    })
+  </code>
+</pre>
+
+<h1>
+<a name="code-sharing--modules-mixins" class="anchor" href="#code-sharing--modules-mixins"><span class="octicon octicon-link"></span></a>Code Sharing &gt; Modules Mixins</h1>
+
+<p>In object-oriented programming, to reuse code (a module or api) across multiple classes
+when inheritance does not make sense is to use either:</p>
+
+<ul>
+<li>delegation (every language)</li>
+<li>multiple inheritance (C++, Lisp, Perl, Python)</li>
+<li>mixins (Ruby - <a href="http://www.tutorialspoint.com/ruby/ruby_modules.htm">http://www.tutorialspoint.com/ruby/ruby_modules.htm</a>)</li>
+<li>traits (SELF, PHP - <a href="http://en.wikipedia.org/wiki/Traits_class#PHP">http://en.wikipedia.org/wiki/Traits_class#PHP</a>)</li>
+</ul><p>For our Javascript classes, we'll use the concept of traits which work like php's traits 
+and Ruby's simpler module mixins. We'll look at both here.</p>
+
+<p><strong>Define a module to mixin</strong></p>
+
+<pre>
+  <code>
+    var Logger = {
+        log : function(str){
+            console.log(str) //delegates to firebug
+        },
+        warn : function(str){
+            console.warn(str)
+        }
+    }
+  </code>
+</pre>
+
+<p><strong>Apply the module as a mixin</strong></p>
+
+<pre>
+  <code>
+    namespace("ui.controls.Box", {
+        '@traits' : [Logger],
+        
+          initialize : function(){
+              alert("I am a box")
+          }
+    })
+  </code>
+</pre>
+
+<h1>
+<a name="code-sharing--traits" class="anchor" href="#code-sharing--traits"><span class="octicon octicon-link"></span></a>Code Sharing &gt; Traits</h1>
+
+<p>Traits are similar to module mixins, but does not actually mix itself into the prototype chain of
+the class. Instead, a trait is self-contained function with seperate scope, runs isolated and able to decorate
+the host class with new behavior and properties. A mixin otherwise mixes itself and all it's state into
+the prototype of the class. Both ways have pros and cons.</p>
+
+<p><strong>Define a function as a trait</strong></p>
+
+<pre>
+  <code>
+    var Logger = function(hostClass){
+            this.host = hostClass;
+            this.host.logapi = this;
+        };
+        
+        Logger.prototype = {
+            log : function(str){
+                console.log(this.host.namespace + " logged -&gt; " + str);
+            }
+        }
+  </code>
+</pre>
+
+<p><strong>Apply the function as a trait</strong></p>
+
+<pre>
+  <code>
+    namespace("ui.controls.Box", {
+        '@traits' : [Logger],
+        
+          initialize : function(){
+              console.log(this.logapi) //reference to Logger instance
+          },
+          
+          log : function(str){
+              this.logapi.log(str)
+          }
+    })
+  </code>
+</pre>
+
+<h1>
+<a name="code-sharing--multiple-traits" class="anchor" href="#code-sharing--multiple-traits"><span class="octicon octicon-link"></span></a>Code Sharing &gt; Multiple Traits</h1>
+
+<p>Your class might make use of a single trait or multiple traits, -- works like multiple inheritance 
+which could lead to ambigous method calls, but increases the leverage to share code across classes:</p>
+
+<p><strong>Define multiple kinds of traits (as functions or modules)</strong></p>
+
+<pre>
+  <code>
+    var Draggable = {
+        initialize : function(){},
+        setDraggable : function(){...}
+    };
+    
+    var Resizable = {...}
+    
+    var Logger = function(hostClass){
+            this.host = hostClass;
+            this.host.logapi = this;
+        };
+        
+        Logger.prototype = {
+            log : function(str){
+                console.log(this.host.namespace + " logged -&gt; " + str);
+            }
+        }
+  </code>
+</pre>
+
+<p><strong>Implement multiple traits</strong></p>
+
+<pre>
+  <code>
+    namespace("ui.controls.Box", {
+        '@traits' : [Logger, Draggable, Resizable],
+        
+          initialize : function(){
+              console.log("I can now log, drag and resize myself :");
+          }
+    })
+  </code>
+</pre>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/Nashorn/Class/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/Nashorn/Class/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/Nashorn/Class"></a> is maintained by <a href="https://github.com/Nashorn">Nashorn</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
