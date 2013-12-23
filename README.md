@@ -11,7 +11,7 @@ and inheritance in Javascript using a terse and supple syntax.
 </pre>
 
 
-**Define a an empty Class in a Namespace**
+**Define an empty Class in a Namespace**
 <pre>
   <code>
   	namespace("ui.controls.Box", {
