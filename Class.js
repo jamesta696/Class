@@ -94,6 +94,7 @@
         if(typeof properties == "function"){return properties}
         loadImports(properties, ns);
         delete properties["@imports"];
+        delete properties["@import"];
         var obj = properties["@inherits"];
         //(properties["@inherits"]||Class);
         /*if(!properties["@inherits"] && ("@inherits" in properties) && properties["@imports"]){
@@ -153,7 +154,7 @@
         }
         if(!amdSupported && !forceImports) {return}
 
-        var imports = properties["@imports"]||[];
+        var imports = properties["@imports"]||properties["@import"]||[];
         for(var i=0; i<=imports.length-1; i++){
            imports[i] = relativeToAbsoluteFilePath(imports[i], ns);
         }
