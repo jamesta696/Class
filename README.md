@@ -1,7 +1,7 @@
 # Javascript Classes
 Class.js is lite-weight and optimized library used for defining namespaces, classes 
 and inheritance in Javascript using a terse and supple syntax.
-
+# testing 12345
 **Define a Namespace**
 <pre>
   <code>
